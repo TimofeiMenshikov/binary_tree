@@ -1,0 +1,34 @@
+digraph G {
+rankdir = "LR";
+graph [splines=ortho];
+subgraph cluster0 {
+label = "struct Bin_tree bin_tree [000000bfc17ff690]";fontname="Helvetica,Arial,sans-serif";
+node [fontname="Helvetica,Arial,sans-serif" fontsize = "16" ];
+edge [fontname="Helvetica,Arial,sans-serif"];
+subgraph cluster1 {
+rankdir = "TB";
+label = "bin_tree variables"size [shape=box3d, label="size = 9"];
+tail_ptr [shape=box3d, label="tail pointer = [0000025cef7c1ab0]"];
+head_ptr [shape=box3d, label="head pointer = [0000025cef7c16b0]"];
+root_ptr [shape=box3d, label="root pointer = [0000025cef7c16b0]"];
+}
+subgraph cluster2 {
+label = "bin tree elements"
+"node1"  [ label = "<f1> graph root  | { id = 1 | depth = 1} " shape = "Mrecord" color ="Green"];
+"node2"  [ label = "<f1> left child  | { id = 2 | depth = 2} " shape = "Mrecord" color ="Green"];
+"node4"  [ label = "<f1> left left child  | { id = 4 | depth = 3} " shape = "Mrecord" color ="Green"];
+"node5"  [ label = "<f1> left right child  | { id = 5 | depth = 3} " shape = "Mrecord" color ="Green"];
+"node3"  [ label = "<f1> right child  | { id = 3 | depth = 2} " shape = "Mrecord" color ="Green"];
+"node6"  [ label = "<f1> right left child  | { id = 6 | depth = 3} " shape = "Mrecord" color ="Green"];
+"node7"  [ label = "<f1> nuxai  | { id = 7 | depth = 3} " shape = "Mrecord" color ="Green"];
+"node14"  [ label = "<f1> right right child  | { id = 14 | depth = 4} " shape = "Mrecord" color ="Green"];
+"node15"  [ label = "<f1> bebra  | { id = 15 | depth = 4} " shape = "Mrecord" color ="Green"];
+"node1" -> "node2";
+"node2" -> "node4";
+"node2" -> "node5";
+"node1" -> "node3";
+"node3" -> "node6";
+"node3" -> "node7";
+"node7" -> "node14";
+"node7" -> "node15";
+} } }

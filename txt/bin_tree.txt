@@ -1,0 +1,37 @@
+{
+graph root
+{
+left child
+{
+left left child
+nil
+nil
+}
+{
+left right child
+nil
+nil
+}
+}
+{
+right child
+{
+right left child
+nil
+nil
+}
+{
+nuxai
+{
+right right child
+nil
+nil
+}
+{
+bebra
+nil
+nil
+}
+}
+}
+}
