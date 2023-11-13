@@ -10,13 +10,15 @@
 
 	enum BinTreeErrors
 	{
-		NO_ERROR = 0
+		NO_ERROR = 0,
+		ROOT_PTR_IS_NULL = 1 << 0,
+		HEAD_PTR_IS_NULL = 1 << 1,
+		TAIL_PTR_IS_NULL = 1 << 2,
+		INVALID_BIN_TREE_SIZE = 1 << 3,
 	};
 
-	enum BinTreeExeptions
-	{
-		NULL_PARENT = 1 << 0
-	};
+
+
 
 	enum BinTreeElemChildren
 	{

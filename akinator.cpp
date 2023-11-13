@@ -28,7 +28,6 @@ struct Bin_tree_elem* ask_question(struct Bin_tree_elem* elem_ptr)
 		return return_elem;
 	}
 
-
 	struct Bin_tree_elem* return_elem = elem_ptr->left_child_ptr;
 	return return_elem;
 }

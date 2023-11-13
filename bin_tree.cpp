@@ -27,7 +27,6 @@ struct Bin_tree_elem* init_bin_tree_elem(struct Bin_tree* const bin_tree_ptr, st
 	}
 	else 
 	{
-		//return_code |= NULL_PARENT;
 		return NULL;
 	}
 
@@ -84,13 +83,33 @@ err_t bin_tree_verificator(const struct Bin_tree* const bin_tree_ptr)
 {
 	err_t return_code = NO_ERROR;
 
+	if ((bin_tree_ptr->root_ptr) == NULL) return_code |= ROOT_PTR_IS_NULL;
+	if ((bin_tree_ptr->head_ptr) == NULL) return_code |= HEAD_PTR_IS_NULL;
+	if ((bin_tree_ptr->tail_ptr) == NULL) return_code |= TAIL_PTR_IS_NULL;
+	if ((bin_tree_ptr->size) <= 0) return_code |= INVALID_BIN_TREE_SIZE; 
+
 	return return_code;
 }
 
 
 err_t print_bin_tree_err(const err_t return_code)
 {
-	if (return_code & NULL_PARENT) fprintf(stderr, "exeption: null parent\n");
+	if (return_code & ROOT_PTR_IS_NULL)
+	{
+		fprintf(stderr, "root element pointer is NULL\n");
+	} 
+	if (return_code & HEAD_PTR_IS_NULL)
+	{
+		fprintf(stderr, "head pointer is NULL\n");
+	} 
+	if (return_code & TAIL_PTR_IS_NULL)
+	{
+		fprintf(stderr, "tail pointer is NULL\n");
+	}
+	if (return_code & INVALID_BIN_TREE_SIZE)
+	{
+		fprintf(stderr, "invalid bin tree size\n");
+	} 
 
 	return return_code;
 }
@@ -247,10 +266,6 @@ err_t read_bin_tree_from_file(const char* const filename, struct Bin_tree* const
 
 	char** bin_tree_text =  init_text(filename, &n_strings);
 
-	//print_text(bin_tree_text , n_strings, stdout);
-
-	
-
 	init_bin_tree(bin_tree_ptr, bin_tree_text[1]);
 
 	printf("%s\n", bin_tree_text[1]);
@@ -260,15 +275,11 @@ err_t read_bin_tree_from_file(const char* const filename, struct Bin_tree* const
 
 	read_bin_tree_elem_from_file(file, bin_tree_ptr, &position, current_elem_ptr, LEFT_CHILD, bin_tree_text);
 	read_bin_tree_elem_from_file(file, bin_tree_ptr, &position, current_elem_ptr, RIGHT_CHILD, bin_tree_text);
-	
-	//free_text(bin_tree_text);
 
 	fclose(file);
 
 	return return_code;
 }
-
-
 
 
 err_t bin_tree_dtor(struct Bin_tree* bin_tree_ptr)
