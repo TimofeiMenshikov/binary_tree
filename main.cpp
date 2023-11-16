@@ -65,23 +65,25 @@ int main()
 
 	write_bin_tree_to_file("txt/bin_tree.txt", &bin_tree);*/
 
-	read_bin_tree_from_file("txt/bin_tree.txt", &bin_tree);
+	return_code |= read_bin_tree_from_file("txt/bin_tree.txt", &bin_tree);
 
-	bin_tree_dump(&bin_tree);
+	return_code |= bin_tree_dump(&bin_tree);
+
+	CREATE_ONE_GRAPH()
+
+	return_code |= akinator(&bin_tree);
+
+	return_code |= write_bin_tree_to_file("txt/bin_tree.txt", &bin_tree);
+
+	return_code |= bin_tree_dump(&bin_tree);
+
+	return_code |= find_all_signes(&bin_tree, "bebra", sizeof("bebra"));
+
+	return_code |= compare_two_names(&bin_tree, "bebra", sizeof("bebra"), "right left child", sizeof("right left child"));
 
 	CREATE_ONE_GRAPH()
 
-	akinator(&bin_tree);
-
-	write_bin_tree_to_file("txt/bin_tree.txt", &bin_tree);
-
-	bin_tree_dump(&bin_tree);
-
-	find_all_signes(&bin_tree, "bebra", sizeof("bebra"));
-
-	compare_two_names(&bin_tree, "bebra", sizeof("bebra"), "right left child", sizeof("right left child"));
-
-	CREATE_ONE_GRAPH()
+	print_bin_tree_err(return_code);
 
 	END_TEST()
 }

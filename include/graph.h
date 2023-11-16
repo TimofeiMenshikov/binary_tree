@@ -24,11 +24,11 @@
 
 	FILE* open_file(const char* const filename, const char* const modificator);
 
-	err_t write_to_dot_file(const struct Bin_tree* const bin_tree_ptr, const char* const dot_filename);
+	err_t write_to_dot_file(const struct Bin_tree* const bin_tree_ptr);
 
-	err_t create_one_graph(const struct Bin_tree* const bin_tree_ptr, ssize_t* graph_number_ptr, char *  graph_filepath, const char * const dot_filepath, const char* const graph_file_extension, FILE*  html_file);
+	err_t create_one_graph(const struct Bin_tree* const bin_tree_ptr, ssize_t* graph_number_ptr, char *  graph_filepath, FILE*  html_file);
 
-	#define CREATE_ONE_GRAPH() create_one_graph(&bin_tree, &number, graph_filepath, dot_filepath, graph_file_extension, html_file);	
+	#define CREATE_ONE_GRAPH() create_one_graph(&bin_tree, &number, graph_filepath, html_file);	
 	
 															
 

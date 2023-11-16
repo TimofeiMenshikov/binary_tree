@@ -22,6 +22,23 @@ static size_t find_n_strings(const char* const buffer, const size_t buffer_size)
 }
 
 
+bool check_stdin_valid_symbol(const char symbol)
+{
+	if ((symbol == '\n') || (symbol == '\t'))
+	{
+		return true;
+	}
+
+	if ((symbol >= 20) && (symbol <= 126))
+	{
+		return true;
+	}
+
+	printf("bad symbol %c(%d)\n", symbol, symbol);
+	return false;
+}
+
+
 static char* init_buffer_from_file(const char* const filename, size_t* buffer_size_ptr)
 {
 	struct stat buffer_info;
@@ -39,6 +56,11 @@ static char* init_buffer_from_file(const char* const filename, size_t* buffer_si
 	fclose(inputfile);
 
 	*buffer_size_ptr = buffer_size; 
+
+	for (ssize_t char_number = 0; char_number < buffer_size - 1; char_number++)
+	{
+		check_stdin_valid_symbol(buffer[char_number]);
+	}
 
 	return buffer;
 }
@@ -66,11 +88,14 @@ static void link_text_and_buf(char** const text,  char* const buffer, const size
 
 	for (size_t char_number = 0; char_number < buffer_size - 1; char_number++) // buffer_size - 1, чтобы не считывало последний \0
 	{
-		
-
 		if (buffer[char_number] == '\0')
 		{
 			text[text_pos] = buffer + char_number + 1; // находим конец строки и присваеваем адрес следующего элемента элементу массива 
+
+			while((text[text_pos][0] == '\t') || (text[text_pos][0] == ' '))
+			{
+				(text[text_pos])++;
+			}
 
 			text_pos++;
 		}
@@ -90,9 +115,13 @@ char** init_text(const char* const filename, ssize_t* n_strings_ptr)
 
 	char** text = (char**) calloc(n_strings, sizeof(char*));
 
+	printf("n_strings = %zd\n", n_strings);
+
 	link_text_and_buf(text, buffer, buffer_size);
 
 	*n_strings_ptr = n_strings;
+
+	printf("before return in %s\n", __func__);
 
 	return text;
 }

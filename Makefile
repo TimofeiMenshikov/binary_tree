@@ -3,6 +3,8 @@ CXX = g++
 
 OBJDIR = object_files
 
+READABLE_PRINT_BIN_TREE_FILE = True
+
 OBJECTS = $(OBJDIR)/bin_tree.o $(OBJDIR)/graph.o $(OBJDIR)/text.o $(OBJDIR)/akinator.o
 
 ifeq ($(TEST), True)
@@ -11,6 +13,9 @@ else
 	OBJECTS += $(OBJDIR)/main.o
 endif
 
+ifeq ($(READABLE_PRINT_BIN_TREE_FILE), True)
+	CXXFLAGS += -DREADABLE_PRINT_BIN_TREE_FILE
+endif
 
 all: main.exe
 	main.exe 

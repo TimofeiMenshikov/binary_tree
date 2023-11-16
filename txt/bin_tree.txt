@@ -1,37 +1,85 @@
 {
 graph root
-{
-left child
-{
-left left child
-nil
-nil
-}
-{
-left right child
-nil
-nil
-}
-}
-{
-right child
-{
-right left child
-nil
-nil
-}
-{
-nuxai
-{
-right right child
-nil
-nil
-}
-{
-bebra
-nil
-nil
-}
-}
-}
+	{
+	left child
+		{
+		777
+			{
+			left left child
+				nil
+				nil
+			}
+			{
+			7
+				nil
+				nil
+			}
+		}
+		{
+		big
+			{
+			left right child
+				nil
+				nil
+			}
+			{
+			11
+				nil
+				nil
+			}
+		}
+	}
+	{
+	right child
+		{
+		right left child
+			nil
+			nil
+		}
+		{
+		nuxai
+			{
+			right right child
+				nil
+				nil
+			}
+			{
+			lol
+				{
+				black
+					{
+					bebra
+						nil
+						nil
+					}
+					{
+					nigg
+						nil
+						nil
+					}
+				}
+				{
+				rbob
+					{
+					abobba
+						nil
+						nil
+					}
+					{
+					e
+						{
+						bobr
+							nil
+							nil
+						}
+						{
+						bebr
+							nil
+							nil
+						}
+					}
+				}
+			}
+		}
+	}
 }

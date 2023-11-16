@@ -1,20 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
+
 #include "include/bin_tree.h"
 #include "include/text.h"
+#include "include/akinator.h"
 
-const ssize_t MAX_DYNAMIC_PTRS = 1000;
+#define GET_STRING_WITH_QUESTION(str, question, ...)							\
+{																				\
+	printf(question, __VA_ARGS__);												\
+																				\
+	str = (char*) calloc(MAX_STR_SIZE, sizeof(char));							\
+																				\
+	ssize_t answer_size = 0;													\
+																				\
+	scanf("%s%n", str, &answer_size);											\
+																				\
+	for (ssize_t char_number = 0; char_number < answer_size - 1; char_number++)	\
+	{																			\
+		if (!check_stdin_valid_symbol(str[char_number]))						\
+		{																		\
+			free(str);															\
+			return BAD_ANSWER;													\
+		}																		\
+	}																			\
+																				\
+	append_new_dynamic_ptr((void*)str, &(bin_tree_ptr->ptrs));					\
+}
 
-struct Names_with_dynamic_mem 
-{
-	char* arr[MAX_DYNAMIC_PTRS] = {};
-	ssize_t size = 0;
-};
 
-struct Names_with_dynamic_mem names_with_dynamic_mem;
-
-struct Bin_tree_elem* ask_question(struct Bin_tree_elem* elem_ptr)
+static struct Bin_tree_elem* ask_question(struct Bin_tree_elem* elem_ptr)
 {
 	printf("%s?\n", elem_ptr->elem);
 
@@ -41,8 +57,6 @@ err_t akinator(struct Bin_tree* const bin_tree_ptr)
 	while ((current_elem_ptr->left_child_ptr != NULL) && (current_elem_ptr->right_child_ptr != NULL))
 	{
 		current_elem_ptr = ask_question(current_elem_ptr);
-		printf("after ask\n");
-		printf("[%p]\n", current_elem_ptr);
 	} 
 
 	printf("you are %s?\n", current_elem_ptr->elem);
@@ -57,21 +71,11 @@ err_t akinator(struct Bin_tree* const bin_tree_ptr)
 	}
 	else
 	{
-		printf("what is it?\n");
-		char* new_name = (char*) calloc(MAX_STR_SIZE, sizeof(char));
-		(names_with_dynamic_mem.arr)[names_with_dynamic_mem.size] = new_name;
-		(names_with_dynamic_mem.size)++;
+		char* new_name = NULL;
+		GET_STRING_WITH_QUESTION(new_name, "%s", "what is it?\n");
 
-
-		scanf("%s", new_name);
-
-		printf("how is %s different from %s?\n", new_name, current_elem_ptr->elem);
-
-		char* new_question = (char*) calloc(MAX_STR_SIZE, sizeof(char));
-		scanf("%s", new_question);
-
-		(names_with_dynamic_mem.arr)[names_with_dynamic_mem.size] = new_question;
-		(names_with_dynamic_mem.size)++;
+		char* new_question = NULL;
+		GET_STRING_WITH_QUESTION(new_question, "how is %s different from %s?\n", new_name, current_elem_ptr->elem);
 
 		printf("OK\n");
 
@@ -83,6 +87,7 @@ err_t akinator(struct Bin_tree* const bin_tree_ptr)
 
 	return return_code;
 }
+
 
 static ssize_t find_id_by_name(struct Bin_tree_elem* const elem_ptr, const char* const name, const ssize_t name_size, ssize_t* const depth_ptr)
 {
@@ -105,14 +110,12 @@ static ssize_t find_id_by_name(struct Bin_tree_elem* const elem_ptr, const char*
 		{
 			printf("error 2 or more matches\n");
 		}
-
 	}
 	else
 	{
 		id += find_id_by_name(elem_ptr->left_child_ptr, name, name_size, depth_ptr);
 		id += find_id_by_name(elem_ptr->right_child_ptr, name, name_size, depth_ptr);
 	}
-
 
 	return id;
 }
@@ -165,8 +168,6 @@ err_t compare_two_names(struct Bin_tree* const bin_tree_ptr, const char* const n
 	}
 
 	ssize_t i = 0;
-
-	
 
 	printf("similar:\n");
 
